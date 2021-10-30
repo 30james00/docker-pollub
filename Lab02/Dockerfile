@@ -16,6 +16,7 @@ rm -rf /var/lib/apt/lists/* && \
 apache2 -v 
 
 COPY apache-conf /etc/apache2/apache2.conf
+COPY index.html /var/www/html/index.html
 
 EXPOSE ${APACHE_PORT}
 
