@@ -10,14 +10,14 @@ docker run -itd --name t2 -p 80:80 -p 10.0.10.0:8000:8000 nginx
 docker network connect bridge1 t2
 
 # Run D1 container connected to bridge1 network
-docker run -itd --name d1 --alias host1 --net bridge1 --ip 10.0.10.254 alpine
+docker run -itd --name d1 --network-alias host1 --net bridge1 --ip 10.0.10.254 alpine
 
 # Run D2 container connected to bridge1 and bridge2 networks
 # docker run -itd --name d2 --alias apa1 --net bridge1
 # docker network connect --alias apa2 bridge2 d2
 
 # Run inspect on all networks
-docker inspect docker0
+docker inspect bridge
 docker inspect bridge1
 # docker inspect bridge2
 
