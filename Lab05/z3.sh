@@ -10,11 +10,11 @@ docker run -itd --name t2 -p 80:80 -p 10.0.10.0:8000:8000 nginx
 docker network connect bridge1 t2
 
 # Run D1 container connected to bridge1 network
-docker run -itd --name d1 --net bridge1 --ip 10.0.10.254 alpine
+docker run -itd --name d1 --alias host1 --net bridge1 --ip 10.0.10.254 alpine
 
 # Run D2 container connected to bridge1 and bridge2 networks
-# docker run -itd --name d2 --net bridge1
-# docker network connect bridge2 d2
+# docker run -itd --name d2 --alias apa1 --net bridge1
+# docker network connect --alias apa2 bridge2 d2
 
 # Run inspect on all networks
 docker inspect docker0
@@ -25,3 +25,5 @@ docker inspect bridge1
 docker stop t1 t2 d1
 docker rm t1 t2 d1
 docker network rm bridge1 #bridge2
+
+# Kontenery przyłączone do dwóch różnych sieci NIE mogą się komunikować za pomocą aliasów, gdyż ich zasięg jest ograniczony do danej sieci
