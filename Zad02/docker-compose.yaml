@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # Nginx container
+  nginx:
+    # Official nginx image based on alpine
+    image: nginx:alpine
+    # Expose nginx on port 6666
+    ports:
+      - 6666:80
+    volumes:
+      # Add phpinfo site
+      - ./site:/site
+      # Add nginx configuration
+      - ./config/site.conf:/etc/nginx/conf.d/site.conf
+    # Connect to both networks
+    networks:
+      - backend
+      - frontend
+  
+  # PHP contriner
+  php:
+    # Official PHP-FPM image based on alpine
+    image: php:fpm-alpine
+    volumes:
+      # Add phpinfo site
+      - ./site:/site
+    networks:
+      - backend
+
+
+# Define networks
+networks:
+  backend:
+  frontend:
