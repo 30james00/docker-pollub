@@ -25,8 +25,36 @@ services:
     volumes:
       # Add phpinfo site
       - ./src:/src
+    # Connect to backend network
     networks:
       - backend
+  
+  # MySQL contriner
+  db:
+    # Official MySQL image
+    image: mysql:latest
+    # Persist db in volume
+    volumes:
+      - db:/var/lib/mysql
+    # Set weak password for testing
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+    # Connect to backend network
+    networks:
+      - backend
+  
+  # phpMyAdmin container
+  phpmyadmin:
+    # Official phpMyAdmin FPM image based on alpine
+    image: phpmyadmin:latest
+    # Expose on port 6001
+    ports:
+      - 6001:80
+    restart: always
+    # Connect to backend network
+    networks:
+      - backend
+
 
 # Define networks
 networks:
@@ -34,3 +62,7 @@ networks:
     driver: bridge
   frontend:
     driver: bridge
+
+# Define volume for MySQL
+volumes:
+  db:
