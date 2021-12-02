@@ -10,26 +10,27 @@ services:
       - 6666:80
     volumes:
       # Add phpinfo site
-      - ./site:/site
+      - ./src:/src
       # Add nginx configuration
-      - ./config/site.conf:/etc/nginx/conf.d/site.conf
+      - ./config/site.conf:/etc/nginx/conf.d/default.conf
     # Connect to both networks
     networks:
       - backend
       - frontend
-  
+
   # PHP contriner
   php:
     # Official PHP-FPM image based on alpine
     image: php:fpm-alpine
     volumes:
       # Add phpinfo site
-      - ./site:/site
+      - ./src:/src
     networks:
       - backend
-
 
 # Define networks
 networks:
   backend:
+    driver: bridge
   frontend:
+    driver: bridge
